@@ -17,9 +17,8 @@ function _request(href, triggerer, addToHistory){
 	$.ajax({
 		url: href
 	}).done( (res) => {
-		//window.history.pushState('page2', 'Title', href);
 		document.title = $(res).filter('title').text();
-		window.history.pushState({"html":res.html, "pageTitle":document.title}, '', href);
+		window.history.pushState(res.html, document.title, href);
 		$('.ajax-container').html($(res).filter('.ajax-container'));
 	})
 }
@@ -39,3 +38,8 @@ function _onLinkClick(evt){
 $(document).on('click', 'a', function(evt){
 	_onLinkClick(evt);
 });
+
+window.onpopstate = function() {
+
+  $('.ajax-container').load(location.href);
+};
