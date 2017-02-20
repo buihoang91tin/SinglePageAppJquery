@@ -40,6 +40,13 @@ $(document).on('click', 'a', function(evt){
 });
 
 window.onpopstate = function() {
-
-  $('.ajax-container').load(location.href);
+	// $('title').load(location.href);
+ //  	$('.ajax-container').load(location.href);
+  	$.ajax({
+		url: location.href
+	}).done( (res) => {
+		document.title = $(res).filter('title').text();
+		//window.history.pushState(res.html, document.title, href);
+		$('.ajax-container').html($(res).filter('.ajax-container'));
+	})
 };
